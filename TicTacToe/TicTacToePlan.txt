@@ -1,0 +1,175 @@
+"""
+Author:             Ethan Smith
+Pseudocode Partner: None
+Date:               October 4th, 2023
+Assignment:         TicTacToe Planning
+Course:             CPSC1050
+
+Code Description:
+Planning out the TicTacToe project
+"""
+
+Start:
+    | _ | _ | _ |
+    | _ | _ | _ |
+    | _ | _ | _ |
+
+O Win Condition:
+    O will need to get three O's in a row either horizontally, vertically, or diagonally
+
+X Win Condition:
+    X Will need to get three O's in a row either horizontally, vertically, or diagonally
+
+Tie Win Condition (Cat Scratch):
+The board will need to be filled, with no empty spaces, but neither win condition has been met.
+
+** Analysis **
+
+    Game Start:
+        - Print a 3x3 grid to represent the game board
+        - Set two players, 'X' and 'O'
+        - Player X will start the game
+
+    Gameplay:
+        - Player X places an 'X' on an empty space
+        - Player O places an 'O' on an empty space
+        - Players will alternate turns until a line of X's or O's are create or there are no spaces left
+
+    Game End:
+        - A player wins if that player created a line of their piece
+        - There will be a draw if the board is full wihout a winner
+
+** Thinking Programmatically **
+
+    Game Start:
+        Initialize the game board:
+            - Create a 3x3 grid (matrix) to represent the game board
+            - Fill the grid with empty spaces (' ') to indicate no moves have been made
+
+    Gameplay:
+        Initialize player variables:
+            - Player 1: 'X'
+            - Player 2: 'O'
+            - Set the current player to Player 1
+        
+        Player makes moves:
+            - Display the current state of the game board
+            - Ask the current player for their move:
+                - Input the row and column where they want to palce their symbol
+            - Validate the move to ensure it's within the grid and the chosen position is not already full
+            - Update the game baord with the player's symbol at the chosen position
+            - Check if the current player has won:
+                - If yes, end the game and declare the current player as the winner
+    Game End:
+        - Display the final state of the game board
+        - Determine the result:
+            - If there is a winner, print the name of the winner then "WINS!" on the same line
+            - If it's a draw, print "It's a TIE!"
+
+    ** Plan the solution**:
+        **Outline**:
+        Game Start:
+            - Create 3x3 2D array
+            - Display the array
+            - Start with Player X
+
+        Gameplay Loop:
+            - Repeat until the game ends:
+                - Display current board state
+                - Ask current play to make their move
+                - Validate the move
+                - Update the board with player's symbol
+                - Check for a win by the current player
+                - Check for a draw
+                - Switch to the other player
+
+        Game End:
+            - Display final board state
+            - Declare the winner or draw
+
+        **Break it down**
+
+        Game Start:
+            - Initialize the board 
+                - 'board' 2D array
+            - Displaying empty board
+                - Function: display_board(board)
+                    - print(board)
+            - Get player's move
+                - Gather user input
+                - Variables row, col
+                    - int(input())
+            - Validation
+                - is_valid_move(board, row, column)
+                    - if board[row][col] == ' _ '
+            - Update the board
+                - make_move(board, row, column, current_player)
+                    - board[row][col] = current_player
+            - Check for a win
+                - check_win(board, current_player)
+                    - for loop and if statements
+                    - if any pass, return true = win for current_player
+                    - if false, check for empty spaces:
+                        check_empty_space(board)
+                            - nested for loops and if statement
+            -Check for draw
+                - is_draw(board)
+                - if returned false for both empty_space() and check_win() = draw
+            -Switch to the other player
+                - current_player = 'X' or current_player = 'O'
+
+        Game End:
+            - print(board)
+                - display_board(board)
+                    - Collect multiple functions within to check for conditions, then if all pass, the print will finally be implemented
+            - print(f'Player {current_player} WINS!') (or tie)
+                - declare_result()
+
+    **Pseudocode**
+        def switch_players():
+            if current_player == 'X'
+                return 'O'
+            else:
+                return 'X'
+
+
+        def display_board(col):
+            output_string = ""
+            
+            for row in board:
+                output_string += "|"
+                for col in row:
+                    if col != "":
+                        output_string += f" {col} |"
+                    else:
+                        output_string += f" _ |"
+                    
+                output_string += "\n"
+                
+            return output_string
+        
+        def check_empty_space():
+            for row in range(3):
+                for col in range(3):
+                    if board[row][col] == ' _ ':
+                        return True
+            return False
+
+        def check_win():
+            for row in range(3):
+
+                Checking rows
+                if all(board[row][col] == current_player for col in range(3)):
+                    return True
+                
+                Checking columns
+                if all(board[col][row] == current_player for col in range(3)):
+                    return True
+                
+            Checking diagonally
+            if all(board[row][row] == current_player for row in range(3)) or all(board[row][2 - row] == current_player for row in range(3)):
+                return True
+            
+            return False
+        
+                    
